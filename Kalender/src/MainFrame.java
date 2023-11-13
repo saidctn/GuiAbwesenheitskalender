@@ -3,18 +3,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    /**
-     * Main-Frame des Kalenders
-     * @author Christopher Okoh
-     * @version 1.0
-     */
+
     BorderLayout borderContainer = new BorderLayout();
     JLabel mitgliederView = new JLabel("MitgliederListe");
     JPanel labelMitglieder = new JPanel();
     JTable tableMitglieder;
     DefaultTableModel mitgliederTable = new DefaultTableModel();
     JButton hinzufuegenButton = new JButton("Mitglied Hinzufuegen");
-    JButton löschen =new JButton("Eintrag entfernen");
+    JButton loeschen =new JButton("Eintrag entfernen");
     JScrollPane scrollPane;
 
 
@@ -29,9 +25,6 @@ public class MainFrame extends JFrame {
         // Tabellen-Reihe
 
 
-        /**
-         * Hinzufügen der DefaultTable in JTable
-         */
         tableMitglieder = new JTable(mitgliederTable);
         scrollPane = new JScrollPane(tableMitglieder);
 
