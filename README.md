@@ -1,5 +1,7 @@
 # GuiAbwesenheitskalender
 
+# Erstellt alle bitte eine Datenbank wie in dem Bild (datenbank erstellen.png ) zu sehen 
+
 
 # Chris:
   Schreibe eine Klasse KalenderFrame siehe Aufgabenblatt 
