@@ -11,21 +11,26 @@ public class MitgliedHinzufuegen {
     private JLabel vorName;
     private JTextField eingabeVorName;
     private JTextField eingabeNachname;
+    private JComboBox<String> lieblingsfarbe;
+    private JLabel farbeFeld;
 
+    private  JComboBox<String>kometenz;
+    private  JLabel kompetenzFeld;
    public  MitgliedHinzufuegen() {
        frame = new JFrame("Mitglied hinzufuegen");
         nachName=new JLabel("Nachname: ");
         vorName=new JLabel("Vorname   : ");
         eingabeVorName=new JTextField();
         eingabeNachname=new JTextField();
-
+        farbeFeld=new JLabel("Lieblingsfarbe: ");
+        kompetenzFeld=new JLabel("Kompetenzen: ");
 
    }
 
 
 
     public void gui() {
-        frame.setSize(500, 400);
+        frame.setSize(600, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
@@ -34,6 +39,7 @@ public class MitgliedHinzufuegen {
         nameHinzufuegen();
         eingabeName();
         lieblingsfarbe();
+        kompetenzen();
 
         frame.setVisible(true);
     }
@@ -62,13 +68,30 @@ public class MitgliedHinzufuegen {
     }
 
     private void lieblingsfarbe(){
-    String farbe []={"schwarz","weiss","rot","gruen","blau","gelb","orang","rosa","dunkrlgrau","magenta","Cyan","helgrau"};
+    String farbe []={"","schwarz","weiss","rot","gruen","blau","gelb","orang","rosa","dunkrlgrau","magenta","Cyan","helgrau"};
+    lieblingsfarbe=new JComboBox<>(farbe);
+    lieblingsfarbe.setBounds(25,275,150,50);
+    lieblingsfarbe.setFont(new Font("Arial",Font.BOLD,25));
+    lieblingsfarbe.setBackground(Color.white);
 
+    farbeFeld.setBounds(10,225,230,50);
+    farbeFeld.setFont(new Font("Arial",Font.BOLD,30));
 
-
-
+    frame.add(farbeFeld);
+    frame.add(lieblingsfarbe);
     }
 
+
+    private void kompetenzen(){
+    kompetenzFeld.setFont(new Font("Arial",Font.BOLD,30));
+    kompetenzFeld.setBounds(360,228,230,50);
+
+
+
+
+
+frame.add(kompetenzFeld);
+    }
 
 }
 
