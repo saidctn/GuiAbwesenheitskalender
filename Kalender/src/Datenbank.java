@@ -86,6 +86,7 @@ public class Datenbank {
 
         int kompetenzID = 0;
         String insert = "INSERT INTO Kompetenz (name) VALUES (?) RETURNING id_kompetenz";
+        String insert2 = "INSERT INTO mk (id_mitglied, id_kompetenz) VALUES (?,?)";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             preparedStatement.setString(1, Kompetenzname);
@@ -162,12 +163,12 @@ public class Datenbank {
     }
 
     private void deleteMK(int mitgliedID, int kompetenzID) {
-        String abfrageMK = "SELECT id_kompetenz FROM kompetenz, ";
-        String deleteMkAbfrage = "DELETE FROM mk where id_mitglied = ? and id_kompetenz = ? ";
+        String abfrageMK = "";
+        String deleteMkAbfrage = "DELETE FROM mk where id_mitglied = ?";
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteMkAbfrage)) {
             preparedStatement.setInt(1, mitgliedID);
-            preparedStatement.setInt(2, kompetenzID);
+            //preparedStatement.setInt(2, kompetenzID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("konnte nicht geloscht werden -> MK: " + e.getMessage());
@@ -220,8 +221,8 @@ public class Datenbank {
 
             // SQL-Anweisung zur Tabellenerstellung
             String createTableSQL = "CREATE TABLE IF NOT EXISTS MK ("
-                    + "id_mitglied VARCHAR(255),"
-                    + "id_kompetenz VARCHAR(255))";
+                    + "id_mitglied INT,"
+                    + "id_kompetenz INT)";
 
             // Tabellenerstellung ausführen
             statement.execute(createTableSQL);
@@ -307,7 +308,7 @@ public class Datenbank {
         }
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         Datenbank app = new Datenbank("thkoln");
         app.connect();
         app.addToDatabase("Khaled", "UNOKNOWN", "Blau", "Windows");
@@ -322,6 +323,6 @@ public class Datenbank {
             int kID = scan.nextInt();
             app.delFromDatabase(mID, kID);
         }
-    }*/
+    }
 }
 
