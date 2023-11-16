@@ -92,7 +92,6 @@ public class MitgliedHinzufuegen {
 
 frame.add(kompetenzFeld);
     }
-
 }
 
 
