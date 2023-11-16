@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BorderLayoutMitSplitPane extends JFrame {
     public BorderLayoutMitSplitPane() {
@@ -10,6 +12,7 @@ public class BorderLayoutMitSplitPane extends JFrame {
 
         JButton buttonAdd = new JButton("Hinzufügen");
         JButton buttonDel = new JButton("Delete");
+
 
         // Erstelle die Listen spätere implementierung mit buttons
         String[] mitgliederDaten = {"affe"};
@@ -30,6 +33,16 @@ public class BorderLayoutMitSplitPane extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(800,50));
         buttonPanel.setLayout(null);
+
+        buttonAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource().equals(buttonAdd)){
+                    MitgliedHinzufuegen mitgliederAddFrame = new MitgliedHinzufuegen();
+                    mitgliederAddFrame.gui();
+                }
+            }
+        });
 
 
 
