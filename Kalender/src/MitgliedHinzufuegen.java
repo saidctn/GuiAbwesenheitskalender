@@ -127,9 +127,7 @@ public class MitgliedHinzufuegen implements ActionListener {
     frame.add(kompetenzenLabel);
 
     }
-<<<<<<< HEAD
-}
-=======
+
 
     private void hinzufuegenButton(){
        hinzufuegenButton.setBounds(100,400,500,50);
@@ -203,10 +201,5 @@ public class MitgliedHinzufuegen implements ActionListener {
 
     }
         }
-
-
-
-
->>>>>>> ae771705f3a77dd28d4f7c31c4d28c1a8ed4c351
 
 
