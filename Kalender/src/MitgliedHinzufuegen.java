@@ -211,7 +211,7 @@ public class MitgliedHinzufuegen implements ActionListener {
               case "VMWare":
                   vMWarwString=faehigkeit;
                   vMWare=new Kompetenz(vMWarwString);break;
-          }s
+          }
 
 
 
@@ -241,7 +241,9 @@ public class MitgliedHinzufuegen implements ActionListener {
 
             if (!(vorName.isEmpty() & nachName.isEmpty() & farbe.isEmpty() & faehigkeit.isEmpty())) {
                 mitarbeiter = new Mitglied(vorName, nachName, farbe);
-                mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
+                //mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
+                // musst du verändern
+                // habe meine Methoden köpfe verändert
 
 
                 if(!windowsString.equals(null)){

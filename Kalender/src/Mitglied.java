@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Mitglied {
+   protected static int id;
     private String vorname;
     private String nachname;
     private String lieblingsfarbe;
@@ -31,6 +32,10 @@ public class Mitglied {
         }
     }
 
+    public ArrayList<Kompetenz> getKompetenzliste() {
+        return kompetenzliste;
+    }
+
     public String getLieblingsfarbe() {
         return lieblingsfarbe;
     }
@@ -53,5 +58,13 @@ public class Mitglied {
 
     public void setVorname(String vorname) {
         this.vorname = vorname;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int ID) {
+        this.id = ID;
     }
 }

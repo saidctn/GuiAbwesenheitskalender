@@ -4,15 +4,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Datenbank {
     // Verbindungsattribute
     private final String url = "jdbc:postgresql://localhost/GuiJava";
     private final String user = "postgres";
     private String password;
-    static Scanner scan = new Scanner(System.in);
 
+    /**
+     * Konstruktor
+     * @param password
+     */
     public Datenbank(String password) {
         this.password = password;
         createTableMitglied();
@@ -20,20 +24,56 @@ public class Datenbank {
         createTableMK();
     }
 
+    /**
+     * Fügt in die Datenbank hinzu
+     * @param m
+     */
+    public void addToDatabase(Mitglied m){
+        int mitgliedID = addMitglied(m.getVorname(),m.getNachname(),m.getLieblingsfarbe());
+        m.setID(mitgliedID);
 
-    public void addToDatabase(String vorname, String nachname, String lieblingsfarbe, String Kompetenz) {
+        int kompetenzID;
+        ArrayList<Kompetenz> liste =m.getKompetenzliste();
+        Iterator<Kompetenz> it = liste.iterator();
+        while (it.hasNext()){
+            Kompetenz k = it.next();
+            kompetenzID = addKompetenz(k.getKompetenzname());
+            k.setID(kompetenzID);
+            addMK(mitgliedID,kompetenzID);
+        }
+    }
+
+    /*public void addToDatabase(String vorname, String nachname, String lieblingsfarbe, String Kompetenz) {
         int mitgliedID = addMitglied(vorname, nachname, lieblingsfarbe);
         int kompetenzID = addKompetenz(Kompetenz);
         addMK(mitgliedID, kompetenzID);
-    }
+    }*/
 
-    public void delFromDatabase(int mitgliedID, int kompetenzID) {
-        deleteMitglied(mitgliedID);
-        deleteKompetenz(kompetenzID);
-        deleteMK(mitgliedID, kompetenzID);
+    /**
+     * löscht von der Datenbank
+     * @param m
+     */
+    public void delFromDatabase(Mitglied m) {
+        int kompetenzID = 0;
+        deleteMitglied(m);
+        ArrayList<Kompetenz> liste = m.getKompetenzliste();
+        Iterator it = liste.iterator();
+        while(it.hasNext()){
+            Kompetenz k = (Kompetenz) it.next();
+            kompetenzID = k.getID();
+            deleteKompetenz(kompetenzID);
+        }
+        deleteMK(m.getID(), kompetenzID);
         System.out.println("Komplett geloscht");
     }
 
+    /**
+     * Fügt einen Mitglied ein intern benutzung
+     * @param vorname
+     * @param nachname
+     * @param lieblingsfarbe
+     * @return
+     */
     private int addMitglied(String vorname, String nachname, String lieblingsfarbe) {
         String insertDataSQL = "INSERT INTO Mitglieder (vorname, nachname, lieblingsfarbe) VALUES (?, ?, ?) RETURNING id_mitglied";
         int mitgliedID = 0;
@@ -63,6 +103,11 @@ public class Datenbank {
         return mitgliedID;
     }
 
+    /**
+     * Fügt eine Kompetenz hinzu intern benutzung
+     * @param Kompetenzname
+     * @return
+     */
     private int addKompetenz(String Kompetenzname) {
 
         int id_abfrage = -1;
@@ -107,23 +152,53 @@ public class Datenbank {
         return kompetenzID;
     }
 
+    /**
+     * Fügt in die Schnittstellentabelle hinzu
+     * @param mitgliedID
+     * @param komptenzID
+     */
     private void addMK(int mitgliedID, int komptenzID) {
+        String select = "SELECT COUNT(*) FROM mk WHERE id_mitglied = ? AND id_kompetenz = ?";
         String insert = "INSERT INTO MK (id_mitglied, id_kompetenz) VALUES (?,?)";
         try (Connection connection = connect();
+             PreparedStatement prep = connect().prepareStatement(select);
              PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
-            preparedStatement.setInt(1, mitgliedID);
-            preparedStatement.setInt(2, komptenzID);
-            preparedStatement.executeUpdate();
+
+            prep.setInt(1,mitgliedID);
+            prep.setInt(2,komptenzID);
+            ResultSet resultSet = prep.executeQuery();
+            resultSet.next();
+            int anzahl = resultSet.getInt(1);
+
+            if (anzahl == 0) {
+                preparedStatement.setInt(1, mitgliedID);
+                preparedStatement.setInt(2, komptenzID);
+                preparedStatement.executeUpdate();
+            } else {
+                System.out.println("\nTupel existiert bereits!!!!!");
+            }
         } catch (SQLException e) {
             System.out.println("Konnte nicht hinzugefuegt werden -> MK: " + e.getMessage());
         }
     }
 
-    private void deleteMitglied(int mitgliedID) {
+    /**
+     * löscht ein Mitglied
+     * @param m
+     */
+    private void deleteMitglied(Mitglied m) {
+        String idmitgliedAbfrage =" SELECT id_mitglied FROM mitglieder where vorname = ? and nachname = ? and lieblingsfarbe = ?";
         String delete = "DELETE FROM Mitglieder WHERE id_mitglied = ?";
 
         try (Connection connection = connect();
+             PreparedStatement prepareID = connect().prepareStatement(idmitgliedAbfrage);
              PreparedStatement preparedStatement = connection.prepareStatement(delete)) {
+
+            prepareID.setString(1,m.getVorname());
+            prepareID.setString(2, m.getNachname());
+            prepareID.setString(3,m.getLieblingsfarbe());
+            ResultSet result = prepareID.executeQuery();
+            int mitgliedID = result.getInt(1);
 
             preparedStatement.setInt(1, mitgliedID);
             preparedStatement.executeUpdate();
@@ -135,6 +210,10 @@ public class Datenbank {
         }
     }
 
+    /**
+     * löscht eine Kompetenz
+     * @param kompetenzID
+     */
     private void deleteKompetenz(int kompetenzID) {
         String abfrageMehrfach = "SELECT count(id_kompetenz) FROM mk WHERE id_kompetenz = ? ";
         try (Connection con = connect();
@@ -162,6 +241,11 @@ public class Datenbank {
         }
     }
 
+    /**
+     * löscht Schnittstellen eintrag
+     * @param mitgliedID
+     * @param kompetenzID
+     */
     private void deleteMK(int mitgliedID, int kompetenzID) {
         String abfrageMK = "";
         String deleteMkAbfrage = "DELETE FROM mk where id_mitglied = ?";
@@ -175,6 +259,9 @@ public class Datenbank {
         }
     }
 
+    /**
+     * Tabelle Mitglieder erzeugen
+     */
     private void createTableMitglied() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement statement = connection.createStatement()) {
@@ -196,6 +283,9 @@ public class Datenbank {
         }
     }
 
+    /**
+     * Tabelle kompetenz erzeugen
+     */
     private void createTableKompetenz() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement statement = connection.createStatement()) {
@@ -215,6 +305,9 @@ public class Datenbank {
         }
     }
 
+    /**
+     * Tabelle mk erzeugen
+     */
     private void createTableMK() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement statement = connection.createStatement()) {
@@ -234,6 +327,10 @@ public class Datenbank {
         }
     }
 
+    /**
+     * Verbindung zum Datenbank aufbauen
+     * @return
+     */
     private Connection connect() {
         Connection conn = null;
         try {
@@ -308,21 +405,5 @@ public class Datenbank {
         }
     }
 
-    public static void main(String[] args) {
-        Datenbank app = new Datenbank("thkoln");
-        app.connect();
-        app.addToDatabase("Khaled", "UNOKNOWN", "Blau", "Windows");
-        app.addToDatabase("Berdan", "Tasyurdu", "Pink", "Windows");
-        app.addToDatabase("Said", "Cetin", "Gruen", "Linux");
-        app.addToDatabase("Chris", "okoh", "Gelb", "GUI");
-        app.addToDatabase("Julian", "Goetze", "Schwarz", "GUI");
-        app.addToDatabase("Kai", "UNKNOWN", "Lila", "Datenbanken");
-        for (int i = 0; i < 5; i++) {
-            System.out.println("\n\n\ngebe mitglied ID und kompetenz ID an");
-            int mID = scan.nextInt();
-            int kID = scan.nextInt();
-            app.delFromDatabase(mID, kID);
-        }
-    }
 }
 
