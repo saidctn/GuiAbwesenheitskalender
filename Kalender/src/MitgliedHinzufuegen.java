@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 public class MitgliedHinzufuegen implements ActionListener {
 
-    private Mitglied mitarbeiter;
-
+    public Mitglied mitarbeiter;
+    private Kompetenz windows;
+    private Kompetenz linux;
+    private  Kompetenz datenbank;
+    private Kompetenz vMWare;
     private JFrame frame;
     private JLabel nachName;
     private JLabel vorName;
@@ -15,7 +18,6 @@ public class MitgliedHinzufuegen implements ActionListener {
     private JTextField eingabeNachname;
     private JComboBox<String> lieblingsfarbe;
     private JLabel farbeLabel;
-
     private  JComboBox<String>komepetenz;
     private  JLabel kompetenzenLabel;
     private JComboBox<String>kompetenzen;
@@ -23,6 +25,7 @@ public class MitgliedHinzufuegen implements ActionListener {
     private JTextField kompetenzenTextField;
     private JButton hinzufuegenButton;
     private JButton kompetenzFeldEntfernen;
+    private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
 
    public  MitgliedHinzufuegen() {
        frame = new JFrame("Mitglied hinzufuegen");
@@ -36,12 +39,11 @@ public class MitgliedHinzufuegen implements ActionListener {
         kompetenzenTextField=new JTextField();
         hinzufuegenButton=new JButton("Mitglied hinzufuegen");
         kompetenzFeldEntfernen=new JButton("kompetenz del");
-
    }
 
 
 
-    public JFrame gui() {
+    public void gui() {
         frame.setSize(820, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +58,6 @@ public class MitgliedHinzufuegen implements ActionListener {
 
         frame.setVisible(true);
 
-        return frame;
     }
 
     private void nameLabel() {
@@ -107,7 +108,7 @@ public class MitgliedHinzufuegen implements ActionListener {
 
 
     private void kompetenzen(){
-       String []komptenzenliste={" ","Windows Server","Linux Server","Datenbanken","VMWare"};
+       String []komptenzenliste={"","Windows Server","Linux Server","Datenbanken","VMWare"};
     kompetenzenLabel.setFont(new Font("Arial",Font.BOLD,30));
     kompetenzenLabel.setBounds(360,180,230,50);
 
@@ -151,6 +152,11 @@ public class MitgliedHinzufuegen implements ActionListener {
         String nachName=new String();
         String farbe=new String();
 
+        String windowsString=new String();
+        String linuxString=new String();
+        String datenbankString=new String();
+        String vMWarwString=new String();
+
         if (e.getSource().equals(lieblingsfarbe)) {
             farbe = (String) lieblingsfarbe.getSelectedItem();
 
@@ -190,7 +196,26 @@ public class MitgliedHinzufuegen implements ActionListener {
 
 
         if(e.getSource().equals(kompetenzen)){
+
             faehigkeit=(String)kompetenzen.getSelectedItem();
+          switch (faehigkeit){
+              case "Windows Server":
+                  windowsString=faehigkeit;
+                  windows=new Kompetenz(windowsString);break;
+              case "Linux Server":
+                  linuxString=faehigkeit;
+                  linux=new Kompetenz(linuxString);break;
+              case "Datenbank":
+                  datenbankString=faehigkeit;
+                  datenbank=new Kompetenz(datenbankString);break;
+              case "VMWare":
+                  vMWarwString=faehigkeit;
+                  vMWare=new Kompetenz(vMWarwString);break;
+          }s
+
+
+
+
             if(kompetenzenTextField.getText().isEmpty()){
             kompetenzenTextField.setText(faehigkeit);}
             else{
@@ -202,6 +227,10 @@ public class MitgliedHinzufuegen implements ActionListener {
 
         if(e.getSource().equals(kompetenzFeldEntfernen)){
             kompetenzenTextField.setText("");
+            vMWarwString=null;
+            linuxString=null;
+            windowsString=null;
+            datenbankString=null;
 
         }
 
@@ -211,7 +240,29 @@ public class MitgliedHinzufuegen implements ActionListener {
 
 
             if (!(vorName.isEmpty() & nachName.isEmpty() & farbe.isEmpty() & faehigkeit.isEmpty())) {
-                Mitglied mitglied = new Mitglied(vorName, nachName, farbe);
+                mitarbeiter = new Mitglied(vorName, nachName, farbe);
+                mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
+
+
+                if(!windowsString.equals(null)){
+                    windows.addMitglied(mitarbeiter);
+                    mitarbeiter.addKompetenz(windows);
+                }
+                if(!vMWarwString.equals(null)){
+                    vMWare.addMitglied(mitarbeiter);
+                    mitarbeiter.addKompetenz(vMWare);
+                }
+                if(!linuxString.equals(null)){
+                    linux.addMitglied(mitarbeiter);
+                    mitarbeiter.addKompetenz(linux);
+                }
+                if(!datenbankString.equals(null)){
+                    datenbank.addMitglied(mitarbeiter);
+                    mitarbeiter.addKompetenz(datenbank);
+                }
+
+
+
                 frame.dispose();
 
             } else {
