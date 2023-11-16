@@ -133,6 +133,7 @@ public class MitgliedHinzufuegen implements ActionListener {
 
     }
 
+
     private void hinzufuegenButton(){
        hinzufuegenButton.setBounds(100,400,500,50);
        hinzufuegenButton.setFont(new Font("Arial",Font.BOLD,20));
@@ -232,9 +233,5 @@ public class MitgliedHinzufuegen implements ActionListener {
         }
     }
         }
-
-
-
-
 
 
