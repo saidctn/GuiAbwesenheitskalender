@@ -4,74 +4,60 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MitgliedHinzufuegen implements ActionListener {
+public class MitgliedHinzufuegen extends JFrame implements ActionListener {
 
-    public Mitglied mitarbeiter;
-    private Kompetenz windows;
-    private Kompetenz linux;
-    private  Kompetenz datenbank;
-    private Kompetenz vMWare;
-    private JFrame frame;
-    private JLabel nachName;
-    private JLabel vorName;
-    private JTextField eingabeVorName;
-    private JTextField eingabeNachname;
+    private Mitglied mitarbeiter;
     private JComboBox<String> lieblingsfarbe;
-    private JLabel farbeLabel;
-    private  JComboBox<String>komepetenz;
-    private  JLabel kompetenzenLabel;
     private JComboBox<String>kompetenzen;
-    private JTextField farbeTextField;
-    private JTextField kompetenzenTextField;
-    private JButton hinzufuegenButton;
-    private JButton kompetenzFeldEntfernen;
+    private JTextField eingabeVorName=new JTextField();
+    private JTextField eingabeNachname=new JTextField();
+    private JTextField farbeTextField=new JTextField();
+    private JTextField kompetenzenTextField=new JTextField();
+    private JButton hinzufuegenButton=new JButton("Mitglied hinzufuegen");
+    private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
     private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
 
    public  MitgliedHinzufuegen() {
-       frame = new JFrame("Mitglied hinzufuegen");
-        nachName=new JLabel("Nachname: ");
-        vorName=new JLabel("Vorname   : ");
-        eingabeVorName=new JTextField();
-        eingabeNachname=new JTextField();
-        farbeLabel=new JLabel("Lieblingsfarbe: ");
-        kompetenzenLabel=new JLabel("Kompetenzen: ");
-        farbeTextField=new JTextField();
-        kompetenzenTextField=new JTextField();
-        hinzufuegenButton=new JButton("Mitglied hinzufuegen");
-        kompetenzFeldEntfernen=new JButton("kompetenz del");
+       new JFrame("Mitglied hinzufuegen");
+
+       setSize(820, 500);
+       setLocationRelativeTo(null);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setLayout(null);
+
+       JLabel nachName=new JLabel("Nachname: ");
+       JLabel vorName=new JLabel("Vorname   :");
+       nameLabel(nachName,vorName);
+
+
+       eingabeName();
+
+
+       JLabel farbeLabel=new JLabel("Lieblingsfarbe: ");
+       lieblingsfarbe(farbeLabel);
+
+       JLabel kompetenzenLabel=new JLabel("Kompetenzen");
+       kompetenzen(kompetenzenLabel);
+       hinzufuegenButton();
+
+       setVisible(true);
    }
 
 
 
-    public void gui() {
-        frame.setSize(820, 500);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-
-
-        nameLabel();
-        eingabeName();
-        lieblingsfarbe();
-        kompetenzen();
-        hinzufuegenButton();
-
-        frame.setVisible(true);
-
-    }
-
-    private void nameLabel() {
+    //plazierung/form d
+    private void nameLabel(JLabel nachName,JLabel vorName) {
         nachName.setBounds(10, 10, 300, 50);
         nachName.setFont(new Font("Arial",Font.BOLD,30));
-        frame.add(nachName);
+        add(nachName);
 
         vorName.setBounds(10,40,300,50);
         vorName.setFont(new Font("Arial",Font.BOLD,30));
         vorName.setLocation(10,80);
-        frame.add(vorName);
+        add(vorName);
     }
 
-
+    //plazierung/form des textfelder von vor-/Nachname
     private void eingabeName(){
         eingabeNachname.setBounds(200,10,250,50);
         eingabeNachname.setFont(new Font("Arial",Font.BOLD,25));
@@ -81,11 +67,12 @@ public class MitgliedHinzufuegen implements ActionListener {
         eingabeVorName.setFont(new Font("Arial",Font.BOLD,25));
 
 
-        frame.add(eingabeNachname);
-       frame.add(eingabeVorName);
+        add(eingabeNachname);
+       add(eingabeVorName);
     }
 
-    private void lieblingsfarbe(){
+    //plazierung/form der farbe
+    private void lieblingsfarbe(JLabel farbeLabel){
     String farbe []={"","schwarz","weiss","rot","gruen","blau","gelb","orang","pink","dunkelgrau","magenta","Cyan","helgrau"};
     lieblingsfarbe=new JComboBox<>(farbe);
     lieblingsfarbe.setBounds(25,300,200,50);
@@ -101,13 +88,13 @@ public class MitgliedHinzufuegen implements ActionListener {
     farbeTextField.setBackground(Color.white);
 
 
-    frame.add(farbeTextField);
-    frame.add(farbeLabel);
-    frame.add(lieblingsfarbe);
+    add(farbeTextField);
+    add(farbeLabel);
+    add(lieblingsfarbe);
     }
 
-
-    private void kompetenzen(){
+    //plazierung/form der Kompetenzen
+    private void kompetenzen(JLabel kompetenzenLabel){
        String []komptenzenliste={"","Windows Server","Linux Server","Datenbanken","VMWare"};
     kompetenzenLabel.setFont(new Font("Arial",Font.BOLD,30));
     kompetenzenLabel.setBounds(360,180,230,50);
@@ -127,24 +114,27 @@ public class MitgliedHinzufuegen implements ActionListener {
     kompetenzFeldEntfernen.setFont(new Font("Arial",Font.BOLD,20));
     kompetenzFeldEntfernen.addActionListener(this);
 
-    frame.add(kompetenzFeldEntfernen);
-    frame.add(kompetenzenTextField);
-    frame.add(kompetenzen);
-    frame.add(kompetenzenLabel);
+    add(kompetenzFeldEntfernen);
+    add(kompetenzenTextField);
+    add(kompetenzen);
+    add(kompetenzenLabel);
 
     }
 
-
+    //plazierung/form des Buttons
     private void hinzufuegenButton(){
        hinzufuegenButton.setBounds(100,400,500,50);
        hinzufuegenButton.setFont(new Font("Arial",Font.BOLD,20));
         hinzufuegenButton.addActionListener(this);
 
-
-       frame.add(hinzufuegenButton);
+       add(hinzufuegenButton);
     }
 
 
+
+
+
+//zusammenspiel der einzellen Komponenten
     @Override
     public void actionPerformed(ActionEvent e) {
         String faehigkeit=new String();
@@ -152,17 +142,12 @@ public class MitgliedHinzufuegen implements ActionListener {
         String nachName=new String();
         String farbe=new String();
 
-        String windowsString=new String();
-        String linuxString=new String();
-        String datenbankString=new String();
-        String vMWarwString=new String();
 
+        //faerbung des TextFeldes durch auswahl der lieblingsfarbe
         if (e.getSource().equals(lieblingsfarbe)) {
             farbe = (String) lieblingsfarbe.getSelectedItem();
-
+            System.out.println("ausgabe farbe von jCombox: "+farbe);
             switch (farbe){
-
-
 
                 case "schwarz":
                     farbeTextField.setBackground(Color.BLACK);break;
@@ -194,28 +179,13 @@ public class MitgliedHinzufuegen implements ActionListener {
 
         }
 
-
+        //eingabe der Kompetenzen in das TextFeld
         if(e.getSource().equals(kompetenzen)){
 
             faehigkeit=(String)kompetenzen.getSelectedItem();
-          switch (faehigkeit){
-              case "Windows Server":
-                  windowsString=faehigkeit;
-                  windows=new Kompetenz(windowsString);break;
-              case "Linux Server":
-                  linuxString=faehigkeit;
-                  linux=new Kompetenz(linuxString);break;
-              case "Datenbank":
-                  datenbankString=faehigkeit;
-                  datenbank=new Kompetenz(datenbankString);break;
-              case "VMWare":
-                  vMWarwString=faehigkeit;
-                  vMWare=new Kompetenz(vMWarwString);break;
-          }s
+            System.out.println("faehingkeiten von Combox: "+faehigkeit);
 
-
-
-
+          //besonderheit bei der eingabe des Textfeldes das am anfang kein komma steht
             if(kompetenzenTextField.getText().isEmpty()){
             kompetenzenTextField.setText(faehigkeit);}
             else{
@@ -224,62 +194,36 @@ public class MitgliedHinzufuegen implements ActionListener {
         }
 
 
-
+        //betaetigung des buttuns entfernt alle Kompetenzen
         if(e.getSource().equals(kompetenzFeldEntfernen)){
             kompetenzenTextField.setText("");
-            vMWarwString=null;
-            linuxString=null;
-            windowsString=null;
-            datenbankString=null;
-
         }
 
+            //es wird erst ein Objekt mitarbeiter erstellt wenn alle fleder ausgefuellt sind
         if(e.getSource().equals(hinzufuegenButton)) {
             vorName=eingabeVorName.getText();
             nachName=eingabeNachname.getText();
+            faehigkeit=kompetenzenTextField.getText();
+            farbe=(String)lieblingsfarbe.getSelectedItem();
 
 
-            if (!(vorName.isEmpty() & nachName.isEmpty() & farbe.isEmpty() & faehigkeit.isEmpty())) {
-                mitarbeiter = new Mitglied(vorName, nachName, farbe);
-                mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
-
-
-                if(!windowsString.equals(null)){
-                    windows.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(windows);
-                }
-                if(!vMWarwString.equals(null)){
-                    vMWare.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(vMWare);
-                }
-                if(!linuxString.equals(null)){
-                    linux.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(linux);
-                }
-                if(!datenbankString.equals(null)){
-                    datenbank.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(datenbank);
-                }
-
-
-
-                frame.dispose();
-
-            } else {
+            if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
 
                 JFrame fehler = new JFrame("alles ausfuellen");
                 fehler.setSize(500, 200);
                 fehler.setLayout(null);
                 fehler.setLocationRelativeTo(null);
 
-
                 JLabel keinMitgliedErzeugt = new JLabel("bitte fuellen sie alle Felder aus");
                 keinMitgliedErzeugt.setBounds(20, 50, 500, 50);
                 keinMitgliedErzeugt.setFont(new Font("Arial", Font.BOLD, 30));
                 keinMitgliedErzeugt.setForeground(Color.red);
                 fehler.add(keinMitgliedErzeugt);
-
                 fehler.setVisible(true);
+
+            } else {
+                mitarbeiter = new Mitglied(vorName, nachName, farbe);
+                dispose();
             }
         }
     }

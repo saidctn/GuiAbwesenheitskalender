@@ -39,7 +39,7 @@ public class BorderLayoutMitSplitPane extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(buttonAdd)){
                     MitgliedHinzufuegen mitgliederAddFrame = new MitgliedHinzufuegen();
-                    mitgliederAddFrame.gui();
+                    //mitgliederAddFrame.gui();
                 }
             }
         });
@@ -63,7 +63,5 @@ public class BorderLayoutMitSplitPane extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(BorderLayoutMitSplitPane::new);
-    }
+
 }
