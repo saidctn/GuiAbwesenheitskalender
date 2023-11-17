@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
 public class Kompetenz {
-    private String kompetenz;
+    private int ID;
+    private String kompetenzname;
     private ArrayList<Mitglied> mitgliedsliste =new ArrayList<>();
 
     public Kompetenz(String kompetenz){
-        this.kompetenz = kompetenz;
+        this.kompetenzname = kompetenz;
     }
 
     public void addMitglied(Mitglied mitglied) {
@@ -18,13 +19,20 @@ public class Kompetenz {
         }
     }
 
-    public String getKompetenz() {
-        return kompetenz;
+    public String getKompetenzname() {
+        return kompetenzname;
     }
 
 
     public void setKompetenz(String kompetenz) {
-        this.kompetenz = kompetenz;
+        this.kompetenzname = kompetenz;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 }
