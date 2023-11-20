@@ -17,6 +17,7 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
     private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
 
+
    public  MitgliedHinzufuegen() {
        new JFrame("Mitglied hinzufuegen");
 
@@ -29,23 +30,27 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
        JLabel vorName=new JLabel("Vorname   :");
        nameLabel(nachName,vorName);
 
-
        eingabeName();
-
 
        JLabel farbeLabel=new JLabel("Lieblingsfarbe: ");
        lieblingsfarbe(farbeLabel);
 
-       JLabel kompetenzenLabel=new JLabel("Kompetenzen");
+       JLabel kompetenzenLabel=new JLabel("Kompetenzen:");
        kompetenzen(kompetenzenLabel);
+
        hinzufuegenButton();
 
        setVisible(true);
    }
 
+   public Mitglied getMitarbeiter(){
+       return mitarbeiter;
+   }
 
 
-    //plazierung/form d
+
+
+    //plazierung/form des labes des namens
     private void nameLabel(JLabel nachName,JLabel vorName) {
         nachName.setBounds(10, 10, 300, 50);
         nachName.setFont(new Font("Arial",Font.BOLD,30));
@@ -131,9 +136,6 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     }
 
 
-
-
-
 //zusammenspiel der einzellen Komponenten
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -174,52 +176,27 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
                 case "hellgrau":
                     farbeTextField.setBackground(Color.lightGray);break;
             }
-
-
-
         }
 
         //eingabe der Kompetenzen in das TextFeld
         if(e.getSource().equals(kompetenzen)){
 
             faehigkeit=(String)kompetenzen.getSelectedItem();
-<<<<<<< HEAD
-            System.out.println("faehingkeiten von Combox: "+faehigkeit);
-=======
-          switch (faehigkeit){
-              case "Windows Server":
-                  windowsString=faehigkeit;
-                  windows=new Kompetenz(windowsString);break;
-              case "Linux Server":
-                  linuxString=faehigkeit;
-                  linux=new Kompetenz(linuxString);break;
-              case "Datenbank":
-                  datenbankString=faehigkeit;
-                  datenbank=new Kompetenz(datenbankString);break;
-              case "VMWare":
-                  vMWarwString=faehigkeit;
-                  vMWare=new Kompetenz(vMWarwString);break;
-          }
 
-
-
->>>>>>> 5f3e7a3cd022860ca0bee88806c84b96aafc4f36
-
-          //besonderheit bei der eingabe des Textfeldes das am anfang kein komma steht
+            //besonderheit bei der eingabe des Textfeldes das am anfang kein komma steht
             if(kompetenzenTextField.getText().isEmpty()){
-            kompetenzenTextField.setText(faehigkeit);}
+                kompetenzenTextField.setText(faehigkeit);}
             else{
                 kompetenzenTextField.setText(kompetenzenTextField.getText()+", "+faehigkeit);
             }
         }
-
 
         //betaetigung des buttuns entfernt alle Kompetenzen
         if(e.getSource().equals(kompetenzFeldEntfernen)){
             kompetenzenTextField.setText("");
         }
 
-            //es wird erst ein Objekt mitarbeiter erstellt wenn alle fleder ausgefuellt sind
+        //es wird erst ein Objekt mitarbeiter erstellt wenn alle fleder ausgefuellt sind
         if(e.getSource().equals(hinzufuegenButton)) {
             vorName=eingabeVorName.getText();
             nachName=eingabeNachname.getText();
@@ -227,39 +204,8 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
             farbe=(String)lieblingsfarbe.getSelectedItem();
 
 
-<<<<<<< HEAD
             if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
-=======
-            if (!(vorName.isEmpty() & nachName.isEmpty() & farbe.isEmpty() & faehigkeit.isEmpty())) {
-                mitarbeiter = new Mitglied(vorName, nachName, farbe);
-                //mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
-                // musst du verändern
-                // habe meine Methoden köpfe verändert
 
-
-                if(!windowsString.equals(null)){
-                    windows.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(windows);
-                }
-                if(!vMWarwString.equals(null)){
-                    vMWare.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(vMWare);
-                }
-                if(!linuxString.equals(null)){
-                    linux.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(linux);
-                }
-                if(!datenbankString.equals(null)){
-                    datenbank.addMitglied(mitarbeiter);
-                    mitarbeiter.addKompetenz(datenbank);
-                }
-
-
-
-                frame.dispose();
-
-            } else {
->>>>>>> 5f3e7a3cd022860ca0bee88806c84b96aafc4f36
 
                 JFrame fehler = new JFrame("alles ausfuellen");
                 fehler.setSize(500, 200);
