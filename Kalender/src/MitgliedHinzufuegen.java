@@ -15,15 +15,20 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JTextField kompetenzenTextField=new JTextField();
     private JButton hinzufuegenButton=new JButton("Mitglied hinzufuegen");
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
-    private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
-private  Mitglied mitarbeiter;
+    private Mitglied mitarbeiter;
+    public static Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank();
+    private  ArrayList<Mitglied>liste;
 
-   public  MitgliedHinzufuegen() {
+
+   public  MitgliedHinzufuegen(ArrayList<Mitglied> liste) {
+
+       this.liste=liste;
+
        new JFrame("Mitglied hinzufuegen");
 
        setSize(820, 500);
        setLocationRelativeTo(null);
-       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        setLayout(null);
 
        JLabel nachName=new JLabel("Nachname: ");
@@ -217,12 +222,28 @@ private  Mitglied mitarbeiter;
             farbe = (String) lieblingsfarbe.getSelectedItem();
 
 
+            int startIndex = 0;
+            int commaIndex;
+
+            while ((commaIndex = faehigkeit.indexOf(",", startIndex)) != -1) {
+                String substring = faehigkeit.substring(startIndex, commaIndex);
+                System.out.println("Substring: " + substring);
+                startIndex = commaIndex + 1; // Setze den Startindex für die nächste Iteration
+            }
+
+            // Der letzte Substring nach dem letzten Komma
+            if (startIndex < faehigkeit.length()) {
+                String lastSubstring = faehigkeit.substring(startIndex);
+                System.out.println("Letzter Substring: " + lastSubstring);
+            }
+
+
+
 
             if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
 
 
-                    // In datenbank Mitglied hinzufugen
-                    mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter);
+
 
 
                     JFrame fehler = new JFrame("alles ausfuellen");
@@ -239,6 +260,7 @@ private  Mitglied mitarbeiter;
 
                 } else {
                     mitarbeiter = new Mitglied(vorName, nachName, farbe);
+                    liste.add(mitarbeiter);
                     dispose();
                 }
             }
