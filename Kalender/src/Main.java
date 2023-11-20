@@ -1,8 +1,10 @@
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
 
 
-        new BorderLayoutMitSplitPane();
+        SwingUtilities.invokeLater(() -> new Passwort_Frame());
 
     }
 }

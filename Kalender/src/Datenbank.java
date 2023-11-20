@@ -17,7 +17,8 @@ public class Datenbank{
      * Konstruktor
      * @param
      */
-    public Datenbank() {
+    public Datenbank(String password) {
+        this.password = password;
         createTableMitglied();
         createTableKompetenz();
         createTableMK();
@@ -330,7 +331,7 @@ public class Datenbank{
      * Verbindung zum Datenbank aufbauen
      * @return
      */
-    private Connection connect() {
+    public Connection connect() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
@@ -339,6 +340,20 @@ public class Datenbank{
             System.out.println(e.getMessage());
         }
         return conn;
+    }
+    /**
+     * Testet die Verbindung zur Datenbank.
+     * @return true, wenn die Verbindung erfolgreich ist, andernfalls false.
+     */
+    public boolean testConnection() {
+        try (Connection connection = connect()) {
+            // Verbindung wurde erfolgreich hergestellt
+            return true;
+        } catch (SQLException e) {
+            // Verbindung konnte nicht hergestellt werden
+            System.out.println("Fehler bei der Verbindung zur Datenbank: " + e.getMessage());
+            return false;
+        }
     }
 
     /**
