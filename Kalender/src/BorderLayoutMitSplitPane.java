@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class BorderLayoutMitSplitPane extends JFrame {
 
     private ArrayList<Mitglied> mitgliedsliste =new ArrayList<>();
-    MitgliedHinzufuegen mitgliederAddFram
+    MitgliedHinzufuegen mitgliederAddFrame;
     public BorderLayoutMitSplitPane() {
         setTitle("Abwesendheits-Kalendar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
