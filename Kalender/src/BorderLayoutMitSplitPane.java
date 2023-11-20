@@ -46,7 +46,7 @@ public class BorderLayoutMitSplitPane extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(buttonAdd)){
-                    mitgliederAddFrame = new MitgliedHinzufuegen();
+                    //mitgliederAddFrame = new MitgliedHinzufuegen();
                 }
             }
         });
