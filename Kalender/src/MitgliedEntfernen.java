@@ -1,15 +1,17 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MitgliedEntfernen {
+public class MitgliedEntfernen{
 
     private DefaultListModel<String> jList;
     private JList<String> membersList;
 
     public MitgliedEntfernen() {
-      showRemoveDialog();
+        showRemoveDialog();
 
     }
     private void showRemoveDialog() {
