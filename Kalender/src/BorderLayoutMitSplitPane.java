@@ -18,6 +18,7 @@ public class BorderLayoutMitSplitPane extends JFrame {
         String[] mitgliederDaten = {"affe"};
         String[] kompetenzDaten = {"Kompetenz 1", "Kompetenz 2", "Kompetenz 3", "Kompetenz 4", "Kompetenz 5"};
 
+
         JList<String> mitgliederListe = new JList<>(mitgliederDaten);
         JList<String> kompetenzListe = new JList<>(kompetenzDaten);
 

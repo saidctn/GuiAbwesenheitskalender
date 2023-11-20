@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MitgliedHinzufuegen extends JFrame implements ActionListener {
 
-    private Mitglied mitarbeiter;
+
     private JComboBox<String> lieblingsfarbe;
     private JComboBox<String>kompetenzen;
     private JTextField eingabeVorName=new JTextField();
@@ -16,7 +16,7 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JButton hinzufuegenButton=new JButton("Mitglied hinzufuegen");
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
     private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
-
+private  Mitglied mitarbeiter;
 
    public  MitgliedHinzufuegen() {
        new JFrame("Mitglied hinzufuegen");
@@ -136,95 +136,113 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     }
 
 
+
 //zusammenspiel der einzellen Komponenten
     @Override
     public void actionPerformed(ActionEvent e) {
-        String faehigkeit=new String();
-        String vorName=new String();
-        String nachName=new String();
-        String farbe=new String();
+        String faehigkeit = new String();
+        String vorName = new String();
+        String nachName = new String();
+        String farbe = new String();
 
 
         //faerbung des TextFeldes durch auswahl der lieblingsfarbe
         if (e.getSource().equals(lieblingsfarbe)) {
             farbe = (String) lieblingsfarbe.getSelectedItem();
-            System.out.println("ausgabe farbe von jCombox: "+farbe);
-            switch (farbe){
+            System.out.println("ausgabe farbe von jCombox: " + farbe);
+            switch (farbe) {
 
                 case "schwarz":
-                    farbeTextField.setBackground(Color.BLACK);break;
+                    farbeTextField.setBackground(Color.BLACK);
+                    break;
                 case "weiss":
-                    farbeTextField.setBackground(Color.white);break;
+                    farbeTextField.setBackground(Color.white);
+                    break;
                 case "rot":
-                    farbeTextField.setBackground(Color.red);break;
+                    farbeTextField.setBackground(Color.red);
+                    break;
                 case "gruen":
-                    farbeTextField.setBackground(Color.green);break;
+                    farbeTextField.setBackground(Color.green);
+                    break;
                 case "blau":
-                    farbeTextField.setBackground(Color.blue);break;
+                    farbeTextField.setBackground(Color.blue);
+                    break;
                 case "gelb":
-                    farbeTextField.setBackground(Color.yellow);break;
+                    farbeTextField.setBackground(Color.yellow);
+                    break;
                 case "orang":
-                    farbeTextField.setBackground(Color.orange);break;
+                    farbeTextField.setBackground(Color.orange);
+                    break;
                 case "pink":
-                    farbeTextField.setBackground(Color.PINK);break;
+                    farbeTextField.setBackground(Color.PINK);
+                    break;
                 case "dunkelgrau":
-                    farbeTextField.setBackground(Color.darkGray);break;
+                    farbeTextField.setBackground(Color.darkGray);
+                    break;
                 case "magenta":
-                    farbeTextField.setBackground(Color.magenta);break;
+                    farbeTextField.setBackground(Color.magenta);
+                    break;
                 case "cyan":
-                    farbeTextField.setBackground(Color.cyan);break;
+                    farbeTextField.setBackground(Color.cyan);
+                    break;
                 case "hellgrau":
-                    farbeTextField.setBackground(Color.lightGray);break;
+                    farbeTextField.setBackground(Color.lightGray);
+                    break;
             }
         }
 
         //eingabe der Kompetenzen in das TextFeld
-        if(e.getSource().equals(kompetenzen)){
+        if (e.getSource().equals(kompetenzen)) {
 
-            faehigkeit=(String)kompetenzen.getSelectedItem();
+            faehigkeit = (String) kompetenzen.getSelectedItem();
 
             //besonderheit bei der eingabe des Textfeldes das am anfang kein komma steht
-            if(kompetenzenTextField.getText().isEmpty()){
-                kompetenzenTextField.setText(faehigkeit);}
-            else{
-                kompetenzenTextField.setText(kompetenzenTextField.getText()+", "+faehigkeit);
+            if (kompetenzenTextField.getText().isEmpty()) {
+                kompetenzenTextField.setText(faehigkeit);
+            } else {
+                kompetenzenTextField.setText(kompetenzenTextField.getText() + ", " + faehigkeit);
             }
         }
 
         //betaetigung des buttuns entfernt alle Kompetenzen
-        if(e.getSource().equals(kompetenzFeldEntfernen)){
+        if (e.getSource().equals(kompetenzFeldEntfernen)) {
             kompetenzenTextField.setText("");
         }
 
         //es wird erst ein Objekt mitarbeiter erstellt wenn alle fleder ausgefuellt sind
-        if(e.getSource().equals(hinzufuegenButton)) {
-            vorName=eingabeVorName.getText();
-            nachName=eingabeNachname.getText();
-            faehigkeit=kompetenzenTextField.getText();
-            farbe=(String)lieblingsfarbe.getSelectedItem();
+        if (e.getSource().equals(hinzufuegenButton)) {
+            vorName = eingabeVorName.getText();
+            nachName = eingabeNachname.getText();
+            faehigkeit = kompetenzenTextField.getText();
+            farbe = (String) lieblingsfarbe.getSelectedItem();
+
 
 
             if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
 
 
-                JFrame fehler = new JFrame("alles ausfuellen");
-                fehler.setSize(500, 200);
-                fehler.setLayout(null);
-                fehler.setLocationRelativeTo(null);
+                    // In datenbank Mitglied hinzufugen
+                    mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter);
 
-                JLabel keinMitgliedErzeugt = new JLabel("bitte fuellen sie alle Felder aus");
-                keinMitgliedErzeugt.setBounds(20, 50, 500, 50);
-                keinMitgliedErzeugt.setFont(new Font("Arial", Font.BOLD, 30));
-                keinMitgliedErzeugt.setForeground(Color.red);
-                fehler.add(keinMitgliedErzeugt);
-                fehler.setVisible(true);
 
-            } else {
-                mitarbeiter = new Mitglied(vorName, nachName, farbe);
-                dispose();
+                    JFrame fehler = new JFrame("alles ausfuellen");
+                    fehler.setSize(500, 200);
+                    fehler.setLayout(null);
+                    fehler.setLocationRelativeTo(null);
+
+                    JLabel keinMitgliedErzeugt = new JLabel("bitte fuellen sie alle Felder aus");
+                    keinMitgliedErzeugt.setBounds(20, 50, 500, 50);
+                    keinMitgliedErzeugt.setFont(new Font("Arial", Font.BOLD, 30));
+                    keinMitgliedErzeugt.setForeground(Color.red);
+                    fehler.add(keinMitgliedErzeugt);
+                    fehler.setVisible(true);
+
+                } else {
+                    mitarbeiter = new Mitglied(vorName, nachName, farbe);
+                    dispose();
+                }
             }
         }
     }
-        }
 
 
