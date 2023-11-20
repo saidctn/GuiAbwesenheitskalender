@@ -3,8 +3,12 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BorderLayoutMitSplitPane extends JFrame {
+
+    private ArrayList<Mitglied> mitgliedsliste =new ArrayList<>();
+    MitgliedHinzufuegen mitgliederAddFram
     public BorderLayoutMitSplitPane() {
         setTitle("Abwesendheits-Kalendar");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,15 +19,18 @@ public class BorderLayoutMitSplitPane extends JFrame {
 
 
         // Erstelle die Listen spätere implementierung mit buttons
-        String[] mitgliederDaten = {"affe"};
-        String[] kompetenzDaten = {"Kompetenz 1", "Kompetenz 2", "Kompetenz 3", "Kompetenz 4", "Kompetenz 5"};
+        DefaultListModel<String> kompetenzenListe = new DefaultListModel<>();
+        kompetenzenListe.add(0,"Windows-Server");
+        kompetenzenListe.add(1,"Datenbank");
+        kompetenzenListe.add(2,"VMWare");
+        kompetenzenListe.add(3,"Linux-Server");
 
-
-        JList<String> mitgliederListe = new JList<>(mitgliederDaten);
-        JList<String> kompetenzListe = new JList<>(kompetenzDaten);
+        //JList<Mitglied> mitgliederListe = new JList<>((ListModel<Mitglied>) mitgliedsliste);
+        JList<String> kompetenzListe = new JList<>(kompetenzenListe);
 
         // Erstelle ein SplitPane
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(mitgliederListe), new JScrollPane(kompetenzListe));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,null,new JScrollPane(kompetenzListe));
+
         splitPane.setDividerLocation(200); // Setze die Position des Dividers
         splitPane.setPreferredSize(new Dimension(200,400));
 
@@ -39,9 +46,14 @@ public class BorderLayoutMitSplitPane extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(buttonAdd)){
-                    MitgliedHinzufuegen mitgliederAddFrame = new MitgliedHinzufuegen();
-                    //mitgliederAddFrame.gui();
+                    mitgliederAddFrame = new MitgliedHinzufuegen();
                 }
+            }
+        });
+        buttonDel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MitgliedEntfernen();
             }
         });
 
@@ -63,6 +75,5 @@ public class BorderLayoutMitSplitPane extends JFrame {
         getContentPane().add(mainPanel);
         setVisible(true);
     }
-
-
 }
+
