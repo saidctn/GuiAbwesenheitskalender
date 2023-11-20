@@ -15,7 +15,7 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JTextField kompetenzenTextField=new JTextField();
     private JButton hinzufuegenButton=new JButton("Mitglied hinzufuegen");
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
-    private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
+    public static Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank();
 private  Mitglied mitarbeiter;
 
    public  MitgliedHinzufuegen() {
@@ -23,7 +23,7 @@ private  Mitglied mitarbeiter;
 
        setSize(820, 500);
        setLocationRelativeTo(null);
-       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        setLayout(null);
 
        JLabel nachName=new JLabel("Nachname: ");
@@ -216,13 +216,22 @@ private  Mitglied mitarbeiter;
             faehigkeit = kompetenzenTextField.getText();
             farbe = (String) lieblingsfarbe.getSelectedItem();
 
+            int kommaIndex=faehigkeit.indexOf(",");
+                String kompezenzen[]=new String[4];
+            if(kommaIndex==-1){
+                kompezenzen[0]=faehigkeit;
+            }
+            else{
+                for (int i=1;i<4;i++){
+                   // kompezenzen[i]=faehigkeit.substring(kommaIndex+1,)
+                }
+            }
 
 
             if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
 
 
-                    // In datenbank Mitglied hinzufugen
-                    mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter);
+
 
 
                     JFrame fehler = new JFrame("alles ausfuellen");
