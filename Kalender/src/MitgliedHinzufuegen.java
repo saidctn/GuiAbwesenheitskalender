@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class MitgliedHinzufuegen implements ActionListener {
 
+    private ArrayList<Mitglied> mitgliedsliste =new ArrayList<>();
     public Mitglied mitarbeiter;
     private Kompetenz windows;
     private Kompetenz linux;
