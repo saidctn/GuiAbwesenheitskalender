@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class BorderLayoutMitSplitPane extends JFrame {
 
     private ArrayList<Mitglied> mitgliedsliste =new ArrayList<>();
+    private DefaultListModel<String> DMList = new DefaultListModel<>();
     MitgliedHinzufuegen mitgliederAddFrame;
     public BorderLayoutMitSplitPane() {
         setTitle("Abwesendheits-Kalendar");
@@ -24,12 +25,11 @@ public class BorderLayoutMitSplitPane extends JFrame {
         kompetenzenListe.add(1,"Datenbank");
         kompetenzenListe.add(2,"VMWare");
         kompetenzenListe.add(3,"Linux-Server");
-
-        //JList<Mitglied> mitgliederListe = new JList<>((ListModel<Mitglied>) mitgliedsliste);
         JList<String> kompetenzListe = new JList<>(kompetenzenListe);
+        JList<String> Mitgliederliste = new JList<>(DMList);
 
         // Erstelle ein SplitPane
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,null,new JScrollPane(kompetenzListe));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,new JScrollPane(Mitgliederliste),new JScrollPane(kompetenzListe));
 
         splitPane.setDividerLocation(200); // Setze die Position des Dividers
         splitPane.setPreferredSize(new Dimension(200,400));
@@ -46,7 +46,10 @@ public class BorderLayoutMitSplitPane extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(buttonAdd)){
-                    //mitgliederAddFrame = new MitgliedHinzufuegen();
+                    mitgliederAddFrame = new MitgliedHinzufuegen(mitgliedsliste);
+                    for(int i = 0;i < mitgliedsliste.size(); i++){
+                        System.out.println(mitgliedsliste.get(i).getVorname());
+                    }
                 }
             }
         });

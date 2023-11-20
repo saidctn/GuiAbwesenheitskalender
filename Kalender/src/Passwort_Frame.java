@@ -30,10 +30,6 @@ public class Passwort_Frame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new Passwort_Frame();
-
-     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -43,6 +39,7 @@ public class Passwort_Frame extends JFrame implements ActionListener {
 
             do {
                 String enteredPassword = new String(pwtf.getPassword());
+                System.out.println(enteredPassword);
 
                 // Übergebe das eingegebene Passwort an die Datenbankklasse
                 Datenbank datenbank = new Datenbank(enteredPassword);
