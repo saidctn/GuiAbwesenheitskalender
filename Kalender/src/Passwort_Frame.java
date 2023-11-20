@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Passwort_Frame extends JFrame implements ActionListener {
     JLabel north = new JLabel("Gebe dein Password ein");
-    JTextField pwtf = new JTextField();
+    JPasswordField pwtf = new JPasswordField();
     JButton enter = new JButton("enter");
 
     Passwort_Frame(){
@@ -30,20 +30,36 @@ public class Passwort_Frame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    //public static void main(String[] args) {
-      //  new Passwort_Frame();
-    //
-    // }
+    public static void main(String[] args) {
+        new Passwort_Frame();
+
+     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(enter)) {
-            String enteredPassword = pwtf.getText();
-            // Übergebe das eingegebene Passwort an die Datenbankklasse
-            //Datenbank datenbank = new Datenbank();
-            //datenbank.setPassword(enteredPassword);
-            //MitgliedHinzufuegen.mitgliedHinzufuegenInDatenbank.setPassword();
 
+            boolean successfulLogin = true;
+
+            do {
+                String enteredPassword = new String(pwtf.getPassword());
+
+                // Übergebe das eingegebene Passwort an die Datenbankklasse
+                Datenbank datenbank = new Datenbank(enteredPassword);
+
+                // Überprüfe die Verbindung und setze successfulLogin entsprechend
+                successfulLogin = datenbank.testConnection();
+
+                if (!successfulLogin) {
+                    // Wenn die Verbindung nicht erfolgreich war, erneute Eingabe auffordern
+                    JOptionPane.showMessageDialog(this, "Falsches Passwort. Bitte versuche es erneut.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    pwtf.setText("");  // Passwortfeld leeren
+                }
+            } while (!successfulLogin);
+            new BorderLayoutMitSplitPane();
+
+            // Schließe das Frame, wenn die Verbindung erfolgreich war
+            dispose();
         }
     }
 }
