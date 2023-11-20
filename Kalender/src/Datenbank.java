@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Datenbank {
+public class Datenbank{
     // Verbindungsattribute
     private final String url = "jdbc:postgresql://localhost/GuiJava";
     private final String user = "postgres";
@@ -15,10 +15,9 @@ public class Datenbank {
 
     /**
      * Konstruktor
-     * @param password
+     * @param
      */
-    public Datenbank(String password) {
-        this.password = password;
+    public Datenbank() {
         createTableMitglied();
         createTableKompetenz();
         createTableMK();
@@ -403,6 +402,14 @@ public class Datenbank {
         } catch (SQLException e) {
             System.out.println("Error while closing connection: " + e.getMessage());
         }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

@@ -15,7 +15,7 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JTextField kompetenzenTextField=new JTextField();
     private JButton hinzufuegenButton=new JButton("Mitglied hinzufuegen");
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
-    private Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
+    Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank("1234");
 private  Mitglied mitarbeiter;
 
    public  MitgliedHinzufuegen() {
