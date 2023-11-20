@@ -42,7 +42,9 @@ public class MitgliedHinzufuegen implements ActionListener {
         kompetenzFeldEntfernen=new JButton("kompetenz del");
    }
 
-
+    public ArrayList<Mitglied> getMitgliedsliste() {
+        return mitgliedsliste;
+    }
 
     public void gui() {
         frame.setSize(820, 500);
