@@ -144,6 +144,9 @@ public class MitgliedHinzufuegen implements ActionListener {
 
        frame.add(hinzufuegenButton);
     }
+    private void addMitgliedInListe(Mitglied m){
+       mitgliedsliste.add(m);
+    }
 
 
     @Override
@@ -242,25 +245,21 @@ public class MitgliedHinzufuegen implements ActionListener {
 
             if (!(vorName.isEmpty() & nachName.isEmpty() & farbe.isEmpty() & faehigkeit.isEmpty())) {
                 mitarbeiter = new Mitglied(vorName, nachName, farbe);
-                //mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter.getVorname(),mitarbeiter.getNachname(),mitarbeiter.getLieblingsfarbe(),windowsString);
-                // musst du verändern
-                // habe meine Methoden köpfe verändert
+                mitgliedsliste.add(mitarbeiter);
 
+                // In datenbank Mitglied hinzufugen
+                mitgliedHinzufuegenInDatenbank.addToDatabase(mitarbeiter);
 
                 if(!windowsString.equals(null)){
-                    windows.addMitglied(mitarbeiter);
                     mitarbeiter.addKompetenz(windows);
                 }
                 if(!vMWarwString.equals(null)){
-                    vMWare.addMitglied(mitarbeiter);
                     mitarbeiter.addKompetenz(vMWare);
                 }
                 if(!linuxString.equals(null)){
-                    linux.addMitglied(mitarbeiter);
                     mitarbeiter.addKompetenz(linux);
                 }
                 if(!datenbankString.equals(null)){
-                    datenbank.addMitglied(mitarbeiter);
                     mitarbeiter.addKompetenz(datenbank);
                 }
 

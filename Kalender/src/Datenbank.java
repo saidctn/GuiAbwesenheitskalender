@@ -404,6 +404,5 @@ public class Datenbank {
             System.out.println("Error while closing connection: " + e.getMessage());
         }
     }
-
 }
 
