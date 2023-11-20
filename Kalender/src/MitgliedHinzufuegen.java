@@ -17,9 +17,13 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
     private JButton kompetenzFeldEntfernen=new JButton("kompetenz del");
     private Mitglied mitarbeiter;
     public static Datenbank mitgliedHinzufuegenInDatenbank=new Datenbank();
+    private  ArrayList<Mitglied>liste;
 
 
-   public  MitgliedHinzufuegen() {
+   public  MitgliedHinzufuegen(ArrayList<Mitglied> liste) {
+
+       this.liste=liste;
+
        new JFrame("Mitglied hinzufuegen");
 
        setSize(820, 500);
@@ -217,16 +221,23 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
             faehigkeit = kompetenzenTextField.getText();
             farbe = (String) lieblingsfarbe.getSelectedItem();
 
-            int kommaIndex=faehigkeit.indexOf(",");
-                String kompezenzen[]=new String[4];
-            if(kommaIndex==-1){
-                kompezenzen[0]=faehigkeit;
+
+            int startIndex = 0;
+            int commaIndex;
+
+            while ((commaIndex = faehigkeit.indexOf(",", startIndex)) != -1) {
+                String substring = faehigkeit.substring(startIndex, commaIndex);
+                System.out.println("Substring: " + substring);
+                startIndex = commaIndex + 1; // Setze den Startindex für die nächste Iteration
             }
-            else{
-                for (int i=1;i<4;i++){
-                   // kompezenzen[i]=faehigkeit.substring(kommaIndex+1,)
-                }
+
+            // Der letzte Substring nach dem letzten Komma
+            if (startIndex < faehigkeit.length()) {
+                String lastSubstring = faehigkeit.substring(startIndex);
+                System.out.println("Letzter Substring: " + lastSubstring);
             }
+
+
 
 
             if (vorName.isEmpty() || nachName.isEmpty() || farbe.isEmpty() || faehigkeit.isEmpty()) {
@@ -249,6 +260,7 @@ public class MitgliedHinzufuegen extends JFrame implements ActionListener {
 
                 } else {
                     mitarbeiter = new Mitglied(vorName, nachName, farbe);
+                    liste.add(mitarbeiter);
                     dispose();
                 }
             }
